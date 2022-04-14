@@ -1,52 +1,8 @@
---- Not mine 
-
+-- (WARNING: This Repository is Licensed! You are not permitted to use/copy this User Interface library)
 local library = { 
 	flags = { }, 
 	items = { } 
 }
-
-_G.ThemeInfo = {
-    fontsize = 15,
-    titlesize = 18,
-    font = Enum.Font.Code,
-    background = "rbxassetid://5553946656",
-    tilesize = 90,
-    cursor = true,
-    cursorimg = "https://t0.rbxcdn.com/42f66da98c40252ee151326a82aab51f",
-    backgroundcolor = Color3.fromRGB(20, 20, 20),
-    tabstextcolor = Color3.fromRGB(240, 240, 240),
-    bordercolor = Color3.fromRGB(60, 60, 60),
-    accentcolor = Color3.fromRGB(215, 113, 255),
-    accentcolor2 = Color3.fromRGB(250, 113, 255),
-    outlinecolor = Color3.fromRGB(60, 60, 60),
-    outlinecolor2 = Color3.fromRGB(0, 0, 0),
-    sectorcolor = Color3.fromRGB(30, 30, 30),
-    toptextcolor = Color3.fromRGB(255, 255, 255),
-    topheight = 48,
-    topcolor = Color3.fromRGB(30, 30, 30),
-    topcolor2 = Color3.fromRGB(30, 30, 30),
-    buttoncolor = Color3.fromRGB(49, 49, 49),
-    buttoncolor2 = Color3.fromRGB(39, 39, 39),
-    itemscolor = Color3.fromRGB(200, 200, 200),
-    itemscolor2 = Color3.fromRGB(210, 210, 210)
-}
-
-if not _G.AccentColors then
-    _G.AccentColors = {
-        Accent1 = Color3.fromRGB(255, 167, 51),
-        Accent2 = Color3.fromRGB(255, 133, 51)           
-    } 
-end
-
-if not _G.CriminalityInfo then
-    _G.CriminalityInfo = {
-        SilentAimColor = Color3.fromRGB(55, 102, 255),
-        ESPColor = Color3.fromRGB(55, 102, 255)                    
-    } 
-end
-
-_G.ThemeInfo.accentcolor = _G.AccentColors.Accent1
-_G.ThemeInfo.accentcolor2 = _G.AccentColors.Accent2
 
 -- Services
 local players = game:GetService("Players")
@@ -62,10 +18,54 @@ local player = players.LocalPlayer
 local mouse = player:GetMouse()
 local camera = game.Workspace.CurrentCamera
 
-if _G.ThemeInfo.cursor and Drawing then
+library.theme = {
+    fontsize = 15,
+    titlesize = 18,
+    font = Enum.Font.Code,
+    background = "rbxassetid://5553946656",
+    tilesize = 90,
+    cursor = true,
+    cursorimg = "https://t0.rbxcdn.com/42f66da98c40252ee151326a82aab51f",
+    backgroundcolor = Color3.fromRGB(20, 20, 20),
+    tabstextcolor = Color3.fromRGB(240, 240, 240),
+    bordercolor = Color3.fromRGB(60, 60, 60),
+    accentcolor = Color3.fromRGB(28, 56, 139),
+    accentcolor2 = Color3.fromRGB(16, 31, 78),
+    outlinecolor = Color3.fromRGB(60, 60, 60),
+    outlinecolor2 = Color3.fromRGB(0, 0, 0),
+    sectorcolor = Color3.fromRGB(30, 30, 30),
+    toptextcolor = Color3.fromRGB(255, 255, 255),
+    topheight = 48,
+    topcolor = Color3.fromRGB(30, 30, 30),
+    topcolor2 = Color3.fromRGB(30, 30, 30),
+    buttoncolor = Color3.fromRGB(49, 49, 49),
+    buttoncolor2 = Color3.fromRGB(39, 39, 39),
+    itemscolor = Color3.fromRGB(200, 200, 200),
+    itemscolor2 = Color3.fromRGB(210, 210, 210)
+}
+
+if not _G.CriminalityInfo then
+    _G.CriminalityInfo = {
+        SilentAimColor = Color3.fromRGB(252, 172, 255),
+        ESPColor = Color3.fromRGB(252, 172, 255)
+    }
+end
+
+if not _G.AccentColors then
+    _G.AccentColors = {
+        Accent1 = Color3.fromRGB(252, 172, 255),
+        Accent2 = Color3.fromRGB(255, 172, 200)
+    }
+end
+
+library.theme.accentcolor = _G.AccentColors.Accent1
+library.theme.accentcolor2 = _G.AccentColors.Accent2
+
+
+if library.theme.cursor and Drawing then
     local success = pcall(function() 
         library.cursor = Drawing.new("Image")
-        library.cursor.Data = game:HttpGet(_G.ThemeInfo.cursorimg)
+        library.cursor.Data = game:HttpGet(library.theme.cursorimg)
         library.cursor.Size = Vector2.new(64, 64)
         library.cursor.Visible = uis.MouseEnabled
         library.cursor.Rounding = 0
@@ -124,14 +124,14 @@ function library:CreateWatermark(name, position)
     watermark.Outline.ZIndex = 4
     watermark.Outline.BorderSizePixel = 0
     watermark.Outline.Visible = watermark.Visible
-    watermark.Outline.BackgroundColor3 = _G.ThemeInfo.outlinecolor
+    watermark.Outline.BackgroundColor3 = library.theme.outlinecolor
     watermark.Outline.Position = UDim2.fromOffset(-1, -1)
 
     watermark.BlackOutline = Instance.new("Frame", watermark.mainbar)
     watermark.BlackOutline.Name = "blackline"
     watermark.BlackOutline.ZIndex = 3
     watermark.BlackOutline.BorderSizePixel = 0
-    watermark.BlackOutline.BackgroundColor3 = _G.ThemeInfo.outlinecolor2
+    watermark.BlackOutline.BackgroundColor3 = library.theme.outlinecolor2
     watermark.BlackOutline.Visible = watermark.Visible
     watermark.BlackOutline.Position = UDim2.fromOffset(-2, -2)
 
@@ -141,7 +141,7 @@ function library:CreateWatermark(name, position)
     watermark.label.BackgroundTransparency = 1.000
     watermark.label.Position = UDim2.new(0, 0, 0, 0)
     watermark.label.Size = UDim2.new(0, 238, 0, 25)
-    watermark.label.Font = _G.ThemeInfo.font
+    watermark.label.Font = library.theme.font
     watermark.label.ZIndex = 6
     watermark.label.Visible = watermark.Visible
     watermark.label.Text = watermark.text
@@ -154,7 +154,7 @@ function library:CreateWatermark(name, position)
     watermark.topbar = Instance.new("Frame", watermark.mainbar)
     watermark.topbar.Name = "TopBar"
     watermark.topbar.ZIndex = 6
-    watermark.topbar.BackgroundColor3 = _G.ThemeInfo.accentcolor
+    watermark.topbar.BackgroundColor3 = library.theme.accentcolor
     watermark.topbar.BorderSizePixel = 0
     watermark.topbar.Visible = watermark.Visible
     watermark.topbar.Size = UDim2.new(0, 0, 0, 1)
@@ -222,7 +222,7 @@ function library:CreateWatermark(name, position)
     end)
 
     function watermark:UpdateTheme(theme)
-        theme = theme or _G.ThemeInfo
+        theme = theme or library.theme
         watermark.Outline.BackgroundColor3 = theme.outlinecolor
         watermark.BlackOutline.BackgroundColor3 = theme.outlinecolor2
         watermark.label.Font = theme.font
@@ -238,12 +238,12 @@ function library:CreateWindow(name, size, hidebutton)
     window.name = name or ""
     window.size = UDim2.fromOffset(size.X, size.Y) or UDim2.fromOffset(492, 598)
     window.hidebutton = hidebutton or Enum.KeyCode.RightShift
-    window.theme = _G.ThemeInfo
+    window.theme = library.theme
 
     local updateevent = Instance.new("BindableEvent")
     function window:UpdateTheme(theme)
-        updateevent:Fire(theme or _G.ThemeInfo)
-        window.theme = (theme or _G.ThemeInfo)
+        updateevent:Fire(theme or library.theme)
+        window.theme = (theme or library.theme)
     end
 
     window.Main = Instance.new("ScreenGui", coregui)
@@ -3543,7 +3543,7 @@ function library:CreateWindow(name, size, hidebutton)
 
             return configSystem
         end
-		
+
         --[[ not finished lol
         function tab:CreatePlayerlist(name)
             local list = { }
